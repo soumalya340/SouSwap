@@ -63,16 +63,16 @@ contract SouSwap {
     // Deposit ether. The DEX will calculate an equivalent
     // amount of ERC2@ token according to the exchange rate,
     // and transfer the ERC20 tokens from the sender to the DEX.
-    // function deposit() public payable returns (uint256) {
-    //     uint256 eth_reserve = address(this).balance.sub(msg.value);
-    //     uint256 token_reserve = token.balanceOf(address(this));
-    //     uint256 token_amount = ((msg.value * (token_reserve)) / eth_reserve) +
-    //         (1);
-    //     uint256 liquidity_minted = (msg.value * (totalLiquidity)) / eth_reserve;
-    //     liquidity[msg.sender] = liquidity[msg.sender].add(liquidity_minted);
-    //     totalLiquidity = totalLiquidity.add(liquidity_minted);
-    //     require(token.transferFrom(msg.sender, address(this), token_amount));
+    function deposit() public payable returns (uint256) {
+        uint256 eth_reserve = address(this).balance.sub(msg.value);
+         uint256 token_reserve = token.balanceOf(address(this));
+         uint256 token_amount = ((msg.value * (token_reserve)) / eth_reserve) +
+             (1);
+         uint256 liquidity_minted = (msg.value * (totalLiquidity)) / eth_reserve;
+         liquidity[msg.sender] = liquidity[msg.sender].add(liquidity_minted);
+         totalLiquidity = totalLiquidity.add(liquidity_minted);
+         require(token.transferFrom(msg.sender, address(this), token_amount));
 
-    //     return Liquidity_minted;
-    // }
+         return Liquidity_minted;
+     }
 }
